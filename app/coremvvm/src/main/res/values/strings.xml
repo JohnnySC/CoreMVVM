@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">coremvvm</string>
+    <string name="no_connection_message">No internet connection</string>
+    <string name="no_service_message">Service is unavailable</string>
+    <string name="unexpected_error_message">Unexpected error happened!</string>
 </resources>
