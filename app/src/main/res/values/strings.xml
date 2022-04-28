@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CoreMVVM</string>
+    <string name="currencies">currencies</string>
+    <string name="favorites">favorites</string>
 </resources>
