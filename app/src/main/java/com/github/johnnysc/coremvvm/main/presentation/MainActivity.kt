@@ -1,19 +1,17 @@
 package com.github.johnnysc.coremvvm.main.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import com.github.johnnysc.coremvvm.R
+import com.github.johnnysc.coremvvm.presentation.BackPress
 import com.github.johnnysc.coremvvm.presentation.FragmentFactory
 import com.github.johnnysc.coremvvm.sl.ProvideViewModel
 import com.google.android.material.tabs.TabLayout
 
-class MainActivity : AppCompatActivity(), ProvideViewModel {
-
-    private lateinit var viewModel: MainViewModel
+class MainActivity : BackPress.Activity<MainViewModel>(), ProvideViewModel {
 
     private lateinit var fragmentFactory: FragmentFactory
 

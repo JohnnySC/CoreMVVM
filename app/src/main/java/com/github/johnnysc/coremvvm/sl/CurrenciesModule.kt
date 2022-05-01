@@ -18,6 +18,7 @@ class CurrenciesModule(
 ) : Module<CurrenciesViewModel> {
 
     override fun viewModel() = CurrenciesViewModel(
+        coreModule.provideCanGoBack(),
         CurrenciesInteractor.Base(
             CurrenciesDomain.Mapper.Base(favorites),
             BaseCurrencyRepository(

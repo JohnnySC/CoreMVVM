@@ -9,6 +9,7 @@ import com.github.johnnysc.coremvvm.data.ProvideConverterFactory
 import com.github.johnnysc.coremvvm.data.ProvideInterceptor
 import com.github.johnnysc.coremvvm.data.ProvideOkHttpClientBuilder
 import com.github.johnnysc.coremvvm.data.ProvideRetrofitBuilder
+import com.github.johnnysc.coremvvm.presentation.CanGoBack
 import com.github.johnnysc.coremvvm.presentation.GlobalErrorCommunication
 import com.github.johnnysc.coremvvm.presentation.ProgressCommunication
 
@@ -16,7 +17,7 @@ import com.github.johnnysc.coremvvm.presentation.ProgressCommunication
  * @author Asatryan on 24.04.2022
  */
 interface CoreModule : ManageResources, ProvideDispatchers, ProvideGlobalErrorCommunication,
-    ProvideProgressCommunication, ProvideRetrofitBuilder, SharedPrefs {
+    ProvideProgressCommunication, ProvideRetrofitBuilder, SharedPrefs, ProvideCanGoBack {
 
     class Base(private val context: Context) : CoreModule {
         private val dispatchers = Dispatchers.Base()
@@ -24,6 +25,8 @@ interface CoreModule : ManageResources, ProvideDispatchers, ProvideGlobalErrorCo
 
         private val communication = GlobalErrorCommunication.Base()
         private val progress = ProgressCommunication.Base()
+
+        private val canGoBack: CanGoBack.Callback = CanGoBack.Callback.Base()
 
         private val retrofitBuilder = ProvideRetrofitBuilder.Base(
             ProvideConverterFactory.Base(),
@@ -47,6 +50,9 @@ interface CoreModule : ManageResources, ProvideDispatchers, ProvideGlobalErrorCo
 
         override fun sharedPreferences(key: String): SharedPreferences =
             context.getSharedPreferences(key, Context.MODE_PRIVATE)
+
+        override fun provideCanGoBack(): CanGoBack.Callback = canGoBack
+
     }
 }
 
@@ -67,4 +73,8 @@ interface ProvideProgressCommunication {
 interface SharedPrefs {
 
     fun sharedPreferences(key: String): SharedPreferences
+}
+
+interface ProvideCanGoBack {
+    fun provideCanGoBack(): CanGoBack.Callback
 }
