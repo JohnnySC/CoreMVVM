@@ -11,11 +11,13 @@ import com.github.johnnysc.coremvvm.presentation.*
  * @author Asatryan on 24.04.2022
  */
 class MainViewModel(
+    canGoBack: CanGoBack,
     private val navigationCommunication: NavigationCommunication.Mutable,
     private val progressCommunication: ProgressCommunication.Mutable,
     dispatchers: Dispatchers,
     communication: GlobalErrorCommunication.Mutable
-) : BaseViewModel<String>(
+) : BackPress.ActivityViewModel<String>(
+    canGoBack,
     communication,
     dispatchers
 ) {

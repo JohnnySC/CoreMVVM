@@ -5,12 +5,12 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.johnnysc.coremvvm.R
-import com.github.johnnysc.coremvvm.presentation.BaseFragment
+import com.github.johnnysc.coremvvm.presentation.BackPress
 
 /**
  * @author Asatryan on 26.04.2022
  */
-class CurrenciesFragment : BaseFragment<CurrenciesViewModel>() {
+class CurrenciesFragment : BackPress.Fragment<CurrenciesUi, CurrenciesViewModel>() {
     override fun viewModelClass() = CurrenciesViewModel::class.java
 
     override val layoutResId: Int = R.layout.fragment_currencies
