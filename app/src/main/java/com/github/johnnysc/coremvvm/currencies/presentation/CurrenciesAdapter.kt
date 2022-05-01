@@ -5,9 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.github.johnnysc.coremvvm.R
 import com.github.johnnysc.coremvvm.core.Mapper
+import com.github.johnnysc.coremvvm.presentation.AbstractViewHolder
+import java.util.*
 
 /**
  * @author Asatryan on 26.04.2022
@@ -29,9 +32,11 @@ class CurrenciesAdapter(
     override fun getItemCount() = list.size
 
     override fun map(data: List<CurrencyUi>) {
+        val diffCallback = DiffUtilsCallback(list, data)
+        val result = DiffUtil.calculateDiff(diffCallback)
         list.clear()
         list.addAll(data)
-        notifyDataSetChanged()//todo diffutils
+        result.dispatchUpdatesTo(this)
     }
 }
 
@@ -43,19 +48,15 @@ class CurrencyViewHolder(
     private val textView: TextView = view.findViewById(R.id.currencyTextView)
     private val compoundButton: CompoundButton = view.findViewById(R.id.compoundButton)
 
+    private val mapper = CurrencyUi.Mapper.Ui(textView, compoundButton)
+
     override fun bind(data: CurrencyUi) {
-        data.apply(textView, compoundButton)
+        data.map(mapper)
 
         compoundButton.setOnClickListener {
-            data.changeFavorite(changeFavorite)
+            data.map(CurrencyUi.Mapper.ChangeFavorite(changeFavorite))
         }
     }
-}
-
-abstract class AbstractViewHolder<T>(view: View) :
-    RecyclerView.ViewHolder(view) {//todo move to core module
-
-    abstract fun bind(data: T)
 }
 
 interface ChangeFavorite {
