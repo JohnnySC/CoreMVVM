@@ -16,18 +16,6 @@ abstract class NavigationScreen(
 
     override fun toString(): String = "id $id"
 
-    override fun show(containerId: Int, fragmentManager: FragmentManager) {
-        when (strategy) {//todo think about strategy later
-            ShowStrategy.REPLACE -> fragmentManager.beginTransaction()
-                .replace(containerId, clasz.newInstance())
-                .commit()
-
-            ShowStrategy.ADD -> fragmentManager.beginTransaction()
-                .add(containerId, clasz.newInstance())
-                .addToBackStack(id)
-                .commit()
-
-            ShowStrategy.POPUP -> fragmentManager.popBackStack()
-        }
-    }
+    override fun show(containerId: Int, fragmentManager: FragmentManager) =
+        strategy.show(id, clasz, containerId, fragmentManager)
 }
