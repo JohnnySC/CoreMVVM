@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.github.johnnysc.coremvvm.R
 import com.github.johnnysc.coremvvm.core.Mapper
+import com.github.johnnysc.coremvvm.presentation.AbstractViewHolder
 
 /**
  * @author Asatryan on 26.04.2022
@@ -50,12 +51,6 @@ class CurrencyViewHolder(
             data.changeFavorite(changeFavorite)
         }
     }
-}
-
-abstract class AbstractViewHolder<T>(view: View) :
-    RecyclerView.ViewHolder(view) {//todo move to core module
-
-    abstract fun bind(data: T)
 }
 
 interface ChangeFavorite {
