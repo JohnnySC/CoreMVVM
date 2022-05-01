@@ -42,8 +42,7 @@ class MainActivity : AppCompatActivity(), ProvideViewModel {
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
 
         tabLayout.addOnTabSelectedListener(object : SimpleTabSelectedListener() {
-            override fun onTabSelected(tab: TabLayout.Tab) =
-                viewModel.chooseTab(tab.text == "currencies")//todo make better
+            override fun onTabSelected(tab: TabLayout.Tab) = viewModel.chooseTab(tab.position)
         })
     }
 

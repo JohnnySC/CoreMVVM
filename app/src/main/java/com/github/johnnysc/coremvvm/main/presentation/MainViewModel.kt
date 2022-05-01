@@ -24,7 +24,7 @@ class MainViewModel(
     private val favoritesNavigationScreen = FavoritesNavigationScreen()
 
     init {
-        chooseTab(true)
+        chooseTab(0)
     }
 
     fun observeNavigation(owner: LifecycleOwner, observer: Observer<NavigationScreen>) {
@@ -35,7 +35,7 @@ class MainViewModel(
         progressCommunication.observe(owner, observer)
     }
 
-    fun chooseTab(listTabChosen: Boolean) = navigationCommunication.map(
-        if (listTabChosen) currenciesNavigationScreen else favoritesNavigationScreen
+    fun chooseTab(tabPosition: Int) = navigationCommunication.map(
+        if (tabPosition == 0) currenciesNavigationScreen else favoritesNavigationScreen
     )
 }
