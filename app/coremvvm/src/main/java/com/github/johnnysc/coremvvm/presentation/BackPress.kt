@@ -16,17 +16,17 @@ interface BackPress {
             if (viewModel.canGoBack())
                 super.onBackPressed()
         }
-    }
 
-    abstract class ActivityViewModel<T>(
-        private val canGoBack: CanGoBack,
-        communication: Communication.Mutable<T>,
-        dispatchers: Dispatchers
-    ) : BaseViewModel<T>(
-        communication,
-        dispatchers
-    ), CanGoBack {
-        override fun canGoBack(): Boolean = canGoBack.canGoBack()
+        abstract class ViewModel<T>(
+            private val canGoBack: CanGoBack,
+            communication: Communication.Mutable<T>,
+            dispatchers: Dispatchers
+        ) : BaseViewModel<T>(
+            communication,
+            dispatchers
+        ), CanGoBack {
+            override fun canGoBack(): Boolean = canGoBack.canGoBack()
+        }
     }
 
     abstract class Fragment<C, T : ViewModel<C>> : BaseFragment<T>() {
