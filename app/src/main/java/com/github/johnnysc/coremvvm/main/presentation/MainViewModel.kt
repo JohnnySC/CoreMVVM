@@ -16,7 +16,7 @@ class MainViewModel(
     private val progressCommunication: ProgressCommunication.Mutable,
     dispatchers: Dispatchers,
     communication: GlobalErrorCommunication.Mutable
-) : BackPress.ActivityViewModel<String>(
+) : BackPress.Activity.ViewModel<String>(
     canGoBack,
     communication,
     dispatchers
