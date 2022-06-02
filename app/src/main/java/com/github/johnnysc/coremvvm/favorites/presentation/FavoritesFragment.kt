@@ -13,16 +13,20 @@ import com.github.johnnysc.coremvvm.presentation.BaseFragment
 class FavoritesFragment : BaseFragment<FavoritesViewModel>() {
     override fun viewModelClass() = FavoritesViewModel::class.java
 
-    override val layoutResId = R.layout.fragment_favorites
+    override val layoutResId = R.layout.single_recycler_view_layout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-        val currenciesAdapter = CurrenciesAdapter(viewModel)
+        val currenciesAdapter = CurrenciesAdapter.Favorites()
         recyclerView.adapter = currenciesAdapter
 
         viewModel.observe(this) { favoritesUi ->
-            favoritesUi.apply(currenciesAdapter)
+            favoritesUi.map(currenciesAdapter)
+        }
+
+        viewModel.observeUpdate(this) {
+            viewModel.update()
         }
     }
 }

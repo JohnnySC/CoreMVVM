@@ -17,24 +17,27 @@ class CurrenciesModule(
     private val cache: CurrenciesCache.Save,
 ) : Module<CurrenciesViewModel> {
 
-    override fun viewModel() = CurrenciesViewModel(
-        coreModule.provideCanGoBack(),
-        CurrenciesInteractor.Base(
-            CurrenciesDomain.Mapper.Base(favorites),
-            BaseCurrencyRepository(
-                favorites,
-                cache,
-                CurrenciesCloudDataSource.Base(
-                    ProvideCurrencyService.Base(coreModule).currencyService(),
-                    HandleDomainError()
-                ),
-                CurrenciesCloud.Mapper.Base()
+    override fun viewModel(): CurrenciesViewModel {
+        val repository = BaseCurrencyRepository(
+            favorites,
+            cache,
+            CurrenciesCloudDataSource.Base(
+                ProvideCurrencyService.Base(coreModule).currencyService(),
+                HandleDomainError()
             ),
-            coreModule.dispatchers(),
-            HandleUiError(coreModule, coreModule.provideGlobalErrorCommunication())
-        ),
-        coreModule.provideProgressCommunication(),
-        CurrenciesCommunication.Base(),
-        coreModule.dispatchers()
-    )
+            CurrenciesCloud.Mapper.Base()
+        )
+        return CurrenciesViewModel(
+            coreModule.provideCanGoBack(),
+            CurrenciesInteractor.Base(
+                CurrenciesDomain.Mapper.Base(favorites, repository),
+                repository,
+                coreModule.dispatchers(),
+                HandleUiError(coreModule, coreModule.provideGlobalErrorCommunication())
+            ),
+            coreModule.provideProgressCommunication(),
+            CurrenciesCommunication.Base(),
+            coreModule.dispatchers()
+        )
+    }
 }

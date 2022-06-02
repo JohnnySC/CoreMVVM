@@ -3,7 +3,6 @@ package com.github.johnnysc.coremvvm.main.presentation
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStoreOwner
 import com.github.johnnysc.coremvvm.R
 import com.github.johnnysc.coremvvm.presentation.BackPress
@@ -44,6 +43,6 @@ class MainActivity : BackPress.Activity<MainViewModel>(), ProvideViewModel {
         })
     }
 
-    override fun <T : ViewModel> provideViewModel(clazz: Class<T>, owner: ViewModelStoreOwner): T =
+    override fun <T : androidx.lifecycle.ViewModel> provideViewModel(clazz: Class<T>, owner: ViewModelStoreOwner): T =
         (application as ProvideViewModel).provideViewModel(clazz, owner)
 }
