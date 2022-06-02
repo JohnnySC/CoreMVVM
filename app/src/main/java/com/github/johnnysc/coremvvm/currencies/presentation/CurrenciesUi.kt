@@ -1,22 +1,14 @@
 package com.github.johnnysc.coremvvm.currencies.presentation
 
-import android.widget.TextView
-import com.github.johnnysc.coremvvm.favorites.presentation.FavoritesUi
+import com.github.johnnysc.coremvvm.core.Mapper
+import com.github.johnnysc.coremvvm.presentation.adapter.ItemUi
 
 /**
- * @author Asatryan on 26.04.2022
+ * @author Asatryan on 02.06.2022
  */
-interface CurrenciesUi : FavoritesUi, ShowDate {
+interface CurrenciesUi : Mapper.Unit<Mapper.Unit<List<ItemUi>>> {
 
-    class Base(
-        list: List<CurrencyUi>,
-        private val date: String
-    ) : FavoritesUi.Abstract(list), CurrenciesUi{
-
-        override fun showDate(textView: TextView) = textView.setText(date)
+    class Base(private val list: List<ItemUi>) : CurrenciesUi {
+        override fun map(data: Mapper.Unit<List<ItemUi>>) = data.map(list)
     }
-}
-
-interface ShowDate {
-    fun showDate(textView: TextView)
 }
