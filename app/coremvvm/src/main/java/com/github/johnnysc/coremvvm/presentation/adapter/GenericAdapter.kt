@@ -32,6 +32,6 @@ abstract class GenericAdapter<T : ItemUi>(
         result.dispatchUpdatesTo(this)
     }
 
-    class Base(viewHolderFactoryChain: ViewHolderFactoryChain<ItemUi>) :
+    abstract class Base(viewHolderFactoryChain: ViewHolderFactoryChain<ItemUi>) :
         GenericAdapter<ItemUi>(viewHolderFactoryChain)
 }
