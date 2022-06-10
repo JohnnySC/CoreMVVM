@@ -10,3 +10,7 @@ Core MVVM repo
 Видео рассказывающее про сам кор модуль https://youtu.be/hc7zFfm-apE
 
 Видео с примером использования кор модуля https://youtu.be/xdNOif7CedU
+
+Generic RecyclerView Adapter Единый адаптер ресайклера https://youtu.be/tAsqq5fIyFU
+
+Как перестать писать свой адаптер и юзать единый https://youtu.be/HPbn6L_o6D8
