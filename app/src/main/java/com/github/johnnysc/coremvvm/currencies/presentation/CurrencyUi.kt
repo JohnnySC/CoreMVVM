@@ -1,5 +1,7 @@
 package com.github.johnnysc.coremvvm.currencies.presentation
 
+import com.github.johnnysc.coremvvm.presentation.adapter.CompareContent
+import com.github.johnnysc.coremvvm.presentation.adapter.CompareId
 import com.github.johnnysc.coremvvm.presentation.adapter.ItemUi
 import com.github.johnnysc.coremvvm.presentation.adapter.MyView
 
@@ -23,7 +25,13 @@ class CurrencyUi(
         }
     }
 
-    override fun id(): String = id
+    override fun same(compareId: CompareId): Boolean = compareId.sameId(id)
 
-    override fun content(): String = text + isFavorite
+    override fun sameId(id: String) = this.id == id
+
+    override fun sameContent(compareContent: CompareContent) =
+        compareContent.sameContent(text + isFavorite)
+
+    override fun sameContent(content: String) = text + isFavorite == content
+
 }

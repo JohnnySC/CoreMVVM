@@ -14,9 +14,15 @@ class DiffUtilCallback<T : ItemUi>(
 
     override fun getNewListSize(): Int = newList.size
 
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-        oldList[oldItemPosition].id() == newList[newItemPosition].id()
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val old: Compare = oldList[oldItemPosition]
+        val new: CompareId = newList[newItemPosition]
+        return old.same(new)
+    }
 
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-        oldList[oldItemPosition].content() == newList[newItemPosition].content()
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        val old: Compare = oldList[oldItemPosition]
+        val new: CompareContent = newList[newItemPosition]
+        return old.sameContent(new)
+    }
 }

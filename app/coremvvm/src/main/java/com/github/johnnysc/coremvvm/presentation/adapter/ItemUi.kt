@@ -3,13 +3,26 @@ package com.github.johnnysc.coremvvm.presentation.adapter
 /**
  * @author Asatryan on 01.06.2022
  */
-interface ItemUi {
+interface ItemUi : Compare, CompareId, CompareContent {
 
     fun type(): Int
 
     fun show(vararg views: MyView)
+}
 
-    fun id(): String
+interface Compare {
 
-    fun content(): String
+    fun same(compareId: CompareId): Boolean
+
+    fun sameContent(compareContent: CompareContent): Boolean
+}
+
+interface CompareId {
+
+    fun sameId(id: String): Boolean
+}
+
+interface CompareContent {
+
+    fun sameContent(content: String): Boolean
 }
