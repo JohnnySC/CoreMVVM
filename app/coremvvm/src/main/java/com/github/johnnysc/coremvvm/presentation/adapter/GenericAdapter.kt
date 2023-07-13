@@ -9,7 +9,7 @@ import com.github.johnnysc.coremvvm.core.Mapper
  * @author Asatryan on 01.06.2022
  */
 abstract class GenericAdapter<T : ItemUi>(
-    private val typeList: List<ItemUiType>
+    private val typeList: ItemUiTypeList<T>
 ) : RecyclerView.Adapter<GenericViewHolder<T>>(), Mapper.Unit<List<T>> {
 
     init {
@@ -28,7 +28,7 @@ abstract class GenericAdapter<T : ItemUi>(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        typeList[viewType].viewHolder(parent) as GenericViewHolder<T>
+        typeList.viewHolder(viewType, parent)
 
     override fun onBindViewHolder(holder: GenericViewHolder<T>, position: Int) =
         holder.bind(list[position])
@@ -43,5 +43,6 @@ abstract class GenericAdapter<T : ItemUi>(
         result.dispatchUpdatesTo(this)
     }
 
-    abstract class Base(typeList: List<ItemUiType>) : GenericAdapter<ItemUi>(typeList)
+    abstract class Base(typeList: List<ItemUiType<ItemUi>>) :
+        GenericAdapter<ItemUi>(ItemUiTypeList.Base(typeList))
 }
