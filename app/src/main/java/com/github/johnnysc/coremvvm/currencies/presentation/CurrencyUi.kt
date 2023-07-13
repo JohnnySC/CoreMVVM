@@ -15,7 +15,7 @@ class CurrencyUi(
     private val changeFavorite: ChangeFavorite
 ) : ItemUi {
 
-    override fun type(): Int = 1
+    override fun type() = CurrencyType
 
     override fun show(vararg views: MyView) {
         views[0].show(text)

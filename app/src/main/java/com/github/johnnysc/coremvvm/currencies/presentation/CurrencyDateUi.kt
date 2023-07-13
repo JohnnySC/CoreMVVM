@@ -10,7 +10,7 @@ import com.github.johnnysc.coremvvm.presentation.adapter.MyView
  */
 class CurrencyDateUi(private val text: String) : ItemUi {
 
-    override fun type(): Int = 2
+    override fun type() = CurrencyDateType
 
     override fun show(vararg views: MyView) = views[0].show(text)
 

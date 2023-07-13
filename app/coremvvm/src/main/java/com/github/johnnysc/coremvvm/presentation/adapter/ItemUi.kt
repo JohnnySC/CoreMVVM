@@ -5,7 +5,7 @@ package com.github.johnnysc.coremvvm.presentation.adapter
  */
 interface ItemUi : Compare, CompareId, CompareContent {
 
-    fun type(): Int
+    fun type(): ItemUiType
 
     fun show(vararg views: MyView)
 }
