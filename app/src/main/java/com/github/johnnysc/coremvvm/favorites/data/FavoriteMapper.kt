@@ -28,7 +28,8 @@ interface FavoriteMapper : CurrenciesCloud.Mapper<List<ItemUi>> {
                     it.first,
                     "$base/${it.first}: ${it.second}",
                     true,
-                    changeFavorite
+                    changeFavorite,
+                    false
                 )
             }
         }

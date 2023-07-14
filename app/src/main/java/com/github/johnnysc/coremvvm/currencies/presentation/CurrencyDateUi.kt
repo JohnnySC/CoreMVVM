@@ -8,9 +8,12 @@ import com.github.johnnysc.coremvvm.presentation.adapter.MyView
 /**
  * @author Asatryan on 02.06.2022
  */
-class CurrencyDateUi(private val text: String) : ItemUi {
+data class CurrencyDateUi(
+    private val text: String,
+    private val clickable: Boolean
+) : ItemUi {
 
-    override fun type() = CurrencyDateType
+    override fun type() = if (clickable) CurrencyDateTypeClickable else CurrencyDateType
 
     override fun show(vararg views: MyView) = views[0].show(text)
 

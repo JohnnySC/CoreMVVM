@@ -8,14 +8,15 @@ import com.github.johnnysc.coremvvm.presentation.adapter.MyView
 /**
  * @author Asatryan on 02.06.2022
  */
-class CurrencyUi(
+data class CurrencyUi(
     private val id: String,
     private val text: String,
     private val isFavorite: Boolean,
-    private val changeFavorite: ChangeFavorite
+    private val changeFavorite: ChangeFavorite,
+    private val clickable: Boolean
 ) : ItemUi {
 
-    override fun type() = CurrencyType
+    override fun type() = if (clickable) CurrencyTypeClickable else CurrencyType
 
     override fun show(vararg views: MyView) {
         views[0].show(text)

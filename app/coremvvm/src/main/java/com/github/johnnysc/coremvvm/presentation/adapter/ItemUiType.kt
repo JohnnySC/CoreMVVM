@@ -4,5 +4,13 @@ import android.view.ViewGroup
 
 interface ItemUiType<T : ItemUi> {
 
-    fun viewHolder(parent: ViewGroup): GenericViewHolder<T>
+    interface Base<T : ItemUi> : ItemUiType<T> {
+
+        fun viewHolder(parent: ViewGroup): GenericViewHolder<T>
+    }
+
+    interface Clickable<T : ItemUi, C : ClickListener> : ItemUiType<T> {
+
+        fun viewHolder(parent: ViewGroup, clickListener: C): GenericViewHolder<T>
+    }
 }

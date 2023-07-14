@@ -8,8 +8,8 @@ import com.github.johnnysc.coremvvm.core.Mapper
 /**
  * @author Asatryan on 01.06.2022
  */
-abstract class GenericAdapter<T : ItemUi>(
-    private val typeList: ItemUiTypeList<T>
+abstract class GenericAdapter<R : ItemUiType<T>, E : ItemUiTypeList<T, R>, T : ItemUi>(
+    protected val typeList: E
 ) : RecyclerView.Adapter<GenericViewHolder<T>>(), Mapper.Unit<List<T>> {
 
     init {
@@ -27,9 +27,6 @@ abstract class GenericAdapter<T : ItemUi>(
         return index
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        typeList.viewHolder(viewType, parent)
-
     override fun onBindViewHolder(holder: GenericViewHolder<T>, position: Int) =
         holder.bind(list[position])
 
@@ -43,6 +40,24 @@ abstract class GenericAdapter<T : ItemUi>(
         result.dispatchUpdatesTo(this)
     }
 
-    abstract class Base(typeList: List<ItemUiType<ItemUi>>) :
-        GenericAdapter<ItemUi>(ItemUiTypeList.Base(typeList))
+    abstract class Simple<T : ItemUi>(
+        typeList: ItemUiTypeList.Simple<T>
+    ) : GenericAdapter<ItemUiType.Base<T>, ItemUiTypeList.Simple<T>, T>(
+        typeList
+    ) {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<T> =
+            typeList.viewHolder(viewType, parent)
+    }
+
+    abstract class WithClicks<C : ClickListener, T : ItemUi>(
+        private val clickListener: C,
+        typeList: ItemUiTypeList.Clickable<C, T>
+    ) : GenericAdapter<ItemUiType.Clickable<T, C>, ItemUiTypeList.Clickable<C, T>, T>(typeList) {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<T> =
+            typeList.viewHolder(viewType, parent, clickListener)
+    }
 }
+
+interface ClickListener

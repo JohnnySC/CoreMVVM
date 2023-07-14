@@ -2,6 +2,7 @@ package com.github.johnnysc.coremvvm.currencies.presentation
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.github.johnnysc.coremvvm.R
 import com.github.johnnysc.coremvvm.presentation.BackPress
@@ -17,7 +18,11 @@ class CurrenciesFragment : BackPress.Fragment<CurrenciesUi, CurrenciesViewModel>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-        val currenciesAdapter = CurrenciesAdapter.Currencies()
+        val currenciesAdapter = CurrenciesAdapter.Currencies(object : CurrenciesClickListener {
+            override fun show(currency: String) {
+                Toast.makeText(context, currency, Toast.LENGTH_LONG).show()
+            }
+        })
         recyclerView.adapter = currenciesAdapter
 
         viewModel.observe(this) { currenciesUi ->
