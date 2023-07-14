@@ -14,10 +14,10 @@ interface CurrenciesAdapter {
         clickListener: CurrenciesClickListener,
     ) : GenericAdapter.WithClicks<CurrenciesClickListener, ItemUi>(
         clickListener,
-        ItemUiTypeList.WithClickListener(listOf(CurrencyTypeClickable, CurrencyDateTypeClickable))
+        ItemUiTypeList.WithClickListener(listOf(CurrencyType.Clickable, CurrencyDateType.Clickable))
     )
 
-    class Favorites: GenericAdapter.Simple<ItemUi>(ItemUiTypeList.Base(listOf(CurrencyType)))
+    class Favorites: GenericAdapter.Simple<ItemUi>(ItemUiTypeList.Base(listOf(CurrencyType.Base)))
 }
 
 interface CurrenciesClickListener : ClickListener {
