@@ -32,7 +32,7 @@ interface CurrenciesDomain {
                 date: String,
                 list: List<Pair<String, Double>>
             ): CurrenciesUi {
-                val finalList = mutableListOf<ItemUi>(CurrencyDateUi("Last update: $date", true))
+                val finalList = mutableListOf<ItemUi>(CurrencyDateUi("Last update: $date", false))
                 finalList.addAll(list.map {
                     CurrencyUi(
                         it.first, "$base/${it.first}: ${it.second}",

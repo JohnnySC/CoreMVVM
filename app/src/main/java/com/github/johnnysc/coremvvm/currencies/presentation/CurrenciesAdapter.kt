@@ -12,12 +12,17 @@ interface CurrenciesAdapter {
 
     class Currencies(
         clickListener: CurrenciesClickListener,
-    ) : GenericAdapter.WithClicks<CurrenciesClickListener, ItemUi>(
+    ) : GenericAdapter.Combo<CurrenciesClickListener, ItemUi>(
         clickListener,
-        ItemUiTypeList.WithClickListener(listOf(CurrencyType.Clickable, CurrencyDateType.Clickable))
+        ItemUiTypeList.Combo(listOf(CurrencyTypeCombo.Clickable, CurrencyDateTypeCombo.Base))
     )
 
-    class Favorites: GenericAdapter.Simple<ItemUi>(ItemUiTypeList.Base(listOf(CurrencyType.Base)))
+    class Favorites(
+        clickListener: CurrenciesClickListener,
+    ) : GenericAdapter.Combo<CurrenciesClickListener, ItemUi>(
+        clickListener,
+        ItemUiTypeList.Combo(listOf(CurrencyTypeCombo.Base, CurrencyTypeCombo.Clickable))
+    )
 }
 
 interface CurrenciesClickListener : ClickListener {

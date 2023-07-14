@@ -28,3 +28,26 @@ abstract class CurrencyDateType : ItemUiType<ItemUi> {
         ) = CurrencyDateViewHolder.Clickable(clickListener, view(parent))
     }
 }
+
+abstract class CurrencyDateTypeCombo : ItemUiType<ItemUi> {
+
+    protected fun view(parent: ViewGroup): View = LayoutInflater.from(parent.context)
+        .inflate(R.layout.currency_date_layout, parent, false)
+
+    object Base : CurrencyDateTypeCombo(), ItemUiType.Combo<ItemUi, CurrenciesClickListener> {
+
+        override fun clickable() = false
+
+        override fun viewHolder(parent: ViewGroup) = CurrencyDateViewHolder.Base(view(parent))
+    }
+
+    object Clickable : CurrencyDateTypeCombo(), ItemUiType.Combo<ItemUi, CurrenciesClickListener> {
+
+        override fun clickable() = true
+
+        override fun viewHolder(
+            parent: ViewGroup,
+            clickListener: CurrenciesClickListener
+        ) = CurrencyDateViewHolder.Clickable(clickListener, view(parent))
+    }
+}

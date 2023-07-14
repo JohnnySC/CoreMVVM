@@ -20,7 +20,7 @@ class CurrenciesFragment : BackPress.Fragment<CurrenciesUi, CurrenciesViewModel>
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
         val currenciesAdapter = CurrenciesAdapter.Currencies(object : CurrenciesClickListener {
             override fun show(currency: String) {
-                Toast.makeText(context, currency, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, currency, Toast.LENGTH_SHORT).show()
             }
         })
         recyclerView.adapter = currenciesAdapter

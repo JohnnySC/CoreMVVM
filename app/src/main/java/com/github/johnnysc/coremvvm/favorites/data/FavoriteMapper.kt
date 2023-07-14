@@ -23,13 +23,13 @@ interface FavoriteMapper : CurrenciesCloud.Mapper<List<ItemUi>> {
         ): List<ItemUi> {
             val filteredList = currencies.map { Pair(it.key, it.value) }.toList()
                 .filter { isFavorite.isFavorite(it.first) }
-            return filteredList.map {
+            return filteredList.mapIndexed { index, it ->
                 CurrencyUi(
                     it.first,
                     "$base/${it.first}: ${it.second}",
                     true,
                     changeFavorite,
-                    false
+                    index % 2 == 0
                 )
             }
         }
