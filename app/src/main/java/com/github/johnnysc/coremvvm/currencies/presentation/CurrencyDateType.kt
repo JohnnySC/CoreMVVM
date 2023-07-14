@@ -1,30 +1,30 @@
 package com.github.johnnysc.coremvvm.currencies.presentation
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.github.johnnysc.coremvvm.R
-import com.github.johnnysc.coremvvm.presentation.adapter.GenericViewHolder
 import com.github.johnnysc.coremvvm.presentation.adapter.ItemUi
+import com.github.johnnysc.coremvvm.presentation.adapter.ItemUiType
 
 /**
  * @author Asatryan on 02.06.2022
  */
-object CurrencyDateType : CurrencyItemUiType {
+abstract class CurrencyDateType : ItemUiType<ItemUi> {
 
-    override fun viewHolder(parent: ViewGroup): GenericViewHolder<ItemUi> = CurrencyDateViewHolder(
-        LayoutInflater.from(parent.context)
-            .inflate(R.layout.currency_date_layout, parent, false)
-    )
-}
+    protected fun view(parent: ViewGroup): View = LayoutInflater.from(parent.context)
+        .inflate(R.layout.currency_date_layout, parent, false)
 
-object CurrencyDateTypeClickable : CurrencyItemUiTypeClickable {
+    object Base : CurrencyDateType(), CurrencyItemUiType.Base {
 
-    override fun viewHolder(
-        parent: ViewGroup,
-        clickListener: CurrenciesClickListener
-    ): GenericViewHolder<ItemUi> = CurrencyDateViewHolderClickable(
-        clickListener,
-        LayoutInflater.from(parent.context)
-            .inflate(R.layout.currency_date_layout, parent, false)
-    )
+        override fun viewHolder(parent: ViewGroup) = CurrencyDateViewHolder.Base(view(parent))
+    }
+
+    object Clickable : CurrencyDateType(), CurrencyItemUiType.Clickable {
+
+        override fun viewHolder(
+            parent: ViewGroup,
+            clickListener: CurrenciesClickListener
+        ) = CurrencyDateViewHolder.Clickable(clickListener, view(parent))
+    }
 }

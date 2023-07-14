@@ -8,9 +8,7 @@ import com.github.johnnysc.coremvvm.presentation.adapter.ItemUi
 /**
  * @author Asatryan on 02.06.2022
  */
-class CurrencyViewHolder(
-    view: View
-) : GenericViewHolder<ItemUi>(view) {
+abstract class CurrencyViewHolder(view: View) : GenericViewHolder<ItemUi>(view) {
 
     override fun bind(item: ItemUi) = with(itemView) {
         item.show(
@@ -18,21 +16,19 @@ class CurrencyViewHolder(
             findViewById(R.id.compoundButton)
         )
     }
-}
 
-class CurrencyViewHolderClickable(
-    private val clickListener: CurrenciesClickListener,
-    view: View
-) : GenericViewHolder<ItemUi>(view) {
+    class Base(view: View) : CurrencyViewHolder(view)
 
-    override fun bind(item: ItemUi) = with(itemView) {
-        setOnClickListener {
-            clickListener.show(item.toString())
+    class Clickable(
+        private val clickListener: CurrenciesClickListener,
+        view: View
+    ) : CurrencyViewHolder(view) {
+
+        override fun bind(item: ItemUi) {
+            super.bind(item)
+            itemView.setOnClickListener {
+                clickListener.show(item.toString())
+            }
         }
-        item.show(
-            findViewById(R.id.currencyTextView),
-            findViewById(R.id.compoundButton)
-        )
     }
 }
-

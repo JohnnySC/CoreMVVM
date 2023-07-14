@@ -13,7 +13,7 @@ data class CurrencyDateUi(
     private val clickable: Boolean
 ) : ItemUi {
 
-    override fun type() = if (clickable) CurrencyDateTypeClickable else CurrencyDateType
+    override fun type() = if (clickable) CurrencyDateType.Clickable else CurrencyDateType.Base
 
     override fun show(vararg views: MyView) = views[0].show(text)
 

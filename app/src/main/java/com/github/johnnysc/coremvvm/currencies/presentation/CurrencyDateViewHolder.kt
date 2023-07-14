@@ -8,22 +8,23 @@ import com.github.johnnysc.coremvvm.presentation.adapter.ItemUi
 /**
  * @author Asatryan on 02.06.2022
  */
-class CurrencyDateViewHolder(
-    view: View
-) : GenericViewHolder<ItemUi>(view) {
+abstract class CurrencyDateViewHolder(view: View) : GenericViewHolder<ItemUi>(view) {
 
-    override fun bind(item: ItemUi) = item.show(itemView.findViewById(R.id.dateTextView))
-}
-
-class CurrencyDateViewHolderClickable(
-    private val clickListener: CurrenciesClickListener,
-    view: View
-) : GenericViewHolder<ItemUi>(view) {
-
-    override fun bind(item: ItemUi) {
-        itemView.setOnClickListener {
-            clickListener.show(item.toString())
-        }
+    override fun bind(item: ItemUi) =
         item.show(itemView.findViewById(R.id.dateTextView))
+
+    class Base(view: View) : CurrencyDateViewHolder(view)
+
+    class Clickable(
+        private val clickListener: CurrenciesClickListener,
+        view: View
+    ) : CurrencyDateViewHolder(view) {
+
+        override fun bind(item: ItemUi) {
+            super.bind(item)
+            itemView.setOnClickListener {
+                clickListener.show(item.toString())
+            }
+        }
     }
 }
