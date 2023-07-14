@@ -71,9 +71,11 @@ abstract class GenericAdapter<R : ItemUiType<T>, E : ItemUiTypeList<T, R>, T : I
      */
     abstract class Combo<C : ClickListener, T : ItemUi>(
         private val clickListener: C,
-        typeList: ItemUiTypeList.Combo<C, T>,
+        typeList: List<ItemUiType.Combo<T, C>>,
         private val clickableIndex: ClickableIndex = ClickableIndex.Base()
-    ) : GenericAdapter<ItemUiType.Combo<T, C>, ItemUiTypeList.Combined<C, T>, T>(typeList) {
+    ) : GenericAdapter<ItemUiType.Combo<T, C>, ItemUiTypeList.Combined<C, T>, T>(
+        ItemUiTypeList.Combo(typeList)
+    ) {
 
         override fun getItemViewType(position: Int): Int {
             val type = list[position].type()
