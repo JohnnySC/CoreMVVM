@@ -4,13 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.johnnysc.coremvvm.R
-import com.github.johnnysc.coremvvm.presentation.adapter.ItemUi
 import com.github.johnnysc.coremvvm.presentation.adapter.ItemUiType
 
 /**
  * @author Asatryan on 02.06.2022
  */
-abstract class CurrencyType : ItemUiType<ItemUi> {
+abstract class CurrencyType : ItemUiType<CurrencyItemUi> {
 
     protected fun view(parent: ViewGroup): View = LayoutInflater.from(parent.context)
         .inflate(R.layout.currency_layout, parent, false)
@@ -27,17 +26,17 @@ abstract class CurrencyType : ItemUiType<ItemUi> {
     }
 }
 
-abstract class CurrencyTypeCombo : ItemUiType<ItemUi> {
+abstract class CurrencyTypeCombo : ItemUiType<CurrencyItemUi> {
 
     protected fun view(parent: ViewGroup): View = LayoutInflater.from(parent.context)
         .inflate(R.layout.currency_layout, parent, false)
 
-    object Base : CurrencyTypeCombo(), ItemUiType.Combo<ItemUi, CurrenciesClickListener> {
+    object Base : CurrencyTypeCombo(), ItemUiType.Combo<CurrencyItemUi, CurrenciesClickListener> {
         override fun clickable() = false
         override fun viewHolder(parent: ViewGroup) = CurrencyViewHolder.Base(view(parent))
     }
 
-    object Clickable : CurrencyTypeCombo(), ItemUiType.Combo<ItemUi, CurrenciesClickListener> {
+    object Clickable : CurrencyTypeCombo(), ItemUiType.Combo<CurrencyItemUi, CurrenciesClickListener> {
         override fun clickable() = true
         override fun viewHolder(
             parent: ViewGroup,

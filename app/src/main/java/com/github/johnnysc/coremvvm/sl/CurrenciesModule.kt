@@ -30,7 +30,7 @@ class CurrenciesModule(
         return CurrenciesViewModel(
             coreModule.provideCanGoBack(),
             CurrenciesInteractor.Base(
-                CurrenciesDomain.Mapper.Base(favorites, repository),
+                CurrenciesDomain.Mapper.Base(favorites),
                 repository,
                 coreModule.dispatchers(),
                 HandleUiError(coreModule, coreModule.provideGlobalErrorCommunication())

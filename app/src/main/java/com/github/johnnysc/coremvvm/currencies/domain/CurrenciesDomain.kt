@@ -2,7 +2,6 @@ package com.github.johnnysc.coremvvm.currencies.domain
 
 import com.github.johnnysc.coremvvm.currencies.data.FavoritesCacheDataSource
 import com.github.johnnysc.coremvvm.currencies.presentation.*
-import com.github.johnnysc.coremvvm.presentation.adapter.ItemUi
 
 /**
  * @author Asatryan on 24.04.2022
@@ -24,19 +23,18 @@ interface CurrenciesDomain {
         fun map(base: String, date: String, list: List<Pair<String, Double>>): T
 
         class Base(
-            private val cacheDataSource: FavoritesCacheDataSource,
-            private val changeFavorite: ChangeFavorite
+            private val cacheDataSource: FavoritesCacheDataSource
         ) : Mapper<CurrenciesUi> {
             override fun map(
                 base: String,
                 date: String,
                 list: List<Pair<String, Double>>
             ): CurrenciesUi {
-                val finalList = mutableListOf<ItemUi>(CurrencyDateUi("Last update: $date", false))
+                val finalList = mutableListOf<CurrencyItemUi>(CurrencyDateUi("Last update: $date", false))
                 finalList.addAll(list.map {
                     CurrencyUi(
                         it.first, "$base/${it.first}: ${it.second}",
-                        cacheDataSource.isFavorite(it.first), changeFavorite, true
+                        cacheDataSource.isFavorite(it.first), true
                     )
                 })
                 return CurrenciesUi.Base(finalList)

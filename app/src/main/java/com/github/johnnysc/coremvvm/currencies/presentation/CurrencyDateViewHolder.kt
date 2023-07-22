@@ -8,9 +8,9 @@ import com.github.johnnysc.coremvvm.presentation.adapter.ItemUi
 /**
  * @author Asatryan on 02.06.2022
  */
-abstract class CurrencyDateViewHolder(view: View) : GenericViewHolder<ItemUi>(view) {
+abstract class CurrencyDateViewHolder(view: View) : GenericViewHolder<CurrencyItemUi>(view) {
 
-    override fun bind(item: ItemUi) =
+    override fun bind(item: CurrencyItemUi) =
         item.show(itemView.findViewById(R.id.dateTextView))
 
     class Base(view: View) : CurrencyDateViewHolder(view)
@@ -20,11 +20,16 @@ abstract class CurrencyDateViewHolder(view: View) : GenericViewHolder<ItemUi>(vi
         view: View
     ) : CurrencyDateViewHolder(view) {
 
-        override fun bind(item: ItemUi) {
+        override fun bind(item: CurrencyItemUi) {
             super.bind(item)
             itemView.setOnClickListener {
-                clickListener.show(item.toString())
+                item.handleClick(clickListener)
             }
         }
     }
+}
+
+interface CurrencyItemUi : ItemUi {
+
+    fun handleClick(clickListener: CurrenciesClickListener) = Unit
 }

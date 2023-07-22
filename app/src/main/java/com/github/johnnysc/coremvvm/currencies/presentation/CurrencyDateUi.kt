@@ -2,7 +2,6 @@ package com.github.johnnysc.coremvvm.currencies.presentation
 
 import com.github.johnnysc.coremvvm.presentation.adapter.CompareContent
 import com.github.johnnysc.coremvvm.presentation.adapter.CompareId
-import com.github.johnnysc.coremvvm.presentation.adapter.ItemUi
 import com.github.johnnysc.coremvvm.presentation.adapter.MyView
 
 /**
@@ -11,7 +10,7 @@ import com.github.johnnysc.coremvvm.presentation.adapter.MyView
 data class CurrencyDateUi(
     private val text: String,
     private val clickable: Boolean
-) : ItemUi {
+) : CurrencyItemUi {
 
     override fun type() =
         if (clickable) CurrencyDateTypeCombo.Clickable else CurrencyDateTypeCombo.Base

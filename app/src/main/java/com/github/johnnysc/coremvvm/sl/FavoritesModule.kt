@@ -22,13 +22,11 @@ class FavoritesModule(
         val communication = FavoritesCommunication.Base()
         val update = UpdateFavorites.Base()
         return FavoritesViewModel(
+            ChangeFavorite.Combo(cacheDataSource, update),
             update,
             FavoritesRepository.Base(
                 cache,
-                FavoriteMapper.Base(
-                    cacheDataSource,
-                    ChangeFavorite.Combo(cacheDataSource, update)
-                )
+                FavoriteMapper.Base(cacheDataSource)
             ),
             communication,
             coreModule.dispatchers()

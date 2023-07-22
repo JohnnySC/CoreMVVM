@@ -13,7 +13,7 @@ class CurrenciesViewModel(
     progressCommunication: ProgressCommunication.Update,
     communication: CurrenciesCommunication,
     dispatchers: Dispatchers
-) : BackPress.ViewModel<CurrenciesUi>(canGoBackCallback, communication, dispatchers) {
+) : BackPress.ViewModel<CurrenciesUi>(canGoBackCallback, communication, dispatchers), CurrenciesClickListener {
 
     private val atFinish = {
         progressCommunication.map(Visibility.Gone())
@@ -36,4 +36,6 @@ class CurrenciesViewModel(
 
     override fun updateCallbacks() =
         canGoBackCallback.updateCallback(canGoBackCallbackInner)
+
+    override fun changeFavorite(id: String) = interactor.changeFavorite(id)
 }
