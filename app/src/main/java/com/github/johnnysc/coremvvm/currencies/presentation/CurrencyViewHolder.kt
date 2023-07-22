@@ -8,7 +8,7 @@ import com.github.johnnysc.coremvvm.presentation.adapter.MyView
 /**
  * @author Asatryan on 02.06.2022
  */
-abstract class CurrencyViewHolder(view: View) : GenericViewHolder<CurrencyItemUi>(view) {
+abstract class CurrencyViewHolder(view: View) : GenericViewHolder<MyView, CurrencyItemUi>(view) {
 
     protected val button: MyView = itemView.findViewById(R.id.compoundButton)
     override fun bind(item: CurrencyItemUi) = with(itemView) {

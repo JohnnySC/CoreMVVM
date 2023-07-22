@@ -4,11 +4,12 @@ import android.view.View
 import com.github.johnnysc.coremvvm.R
 import com.github.johnnysc.coremvvm.presentation.adapter.GenericViewHolder
 import com.github.johnnysc.coremvvm.presentation.adapter.ItemUi
+import com.github.johnnysc.coremvvm.presentation.adapter.MyView
 
 /**
  * @author Asatryan on 02.06.2022
  */
-abstract class CurrencyDateViewHolder(view: View) : GenericViewHolder<CurrencyItemUi>(view) {
+abstract class CurrencyDateViewHolder(view: View) : GenericViewHolder<MyView, CurrencyItemUi>(view) {
 
     override fun bind(item: CurrencyItemUi) =
         item.show(itemView.findViewById(R.id.dateTextView))
@@ -29,7 +30,7 @@ abstract class CurrencyDateViewHolder(view: View) : GenericViewHolder<CurrencyIt
     }
 }
 
-interface CurrencyItemUi : ItemUi {
+interface CurrencyItemUi : ItemUi<MyView> {
 
     fun handleClick(clickListener: CurrenciesClickListener) = Unit
 }

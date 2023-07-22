@@ -9,9 +9,9 @@ import kotlin.math.abs
 /**
  * @author Asatryan on 01.06.2022
  */
-abstract class GenericAdapter<R : ItemUiType<T>, E : ItemUiTypeList<T, R>, T : ItemUi>(
+abstract class GenericAdapter<R : ItemUiType<V, T>, E : ItemUiTypeList<V, T, R>, V : MyView, T : ItemUi<V>>(
     protected val typeList: E
-) : RecyclerView.Adapter<GenericViewHolder<T>>(), Mapper.Unit<List<T>> {
+) : RecyclerView.Adapter<GenericViewHolder<V, T>>(), Mapper.Unit<List<T>> {
 
     init {
         if (typeList.isEmpty())
@@ -28,7 +28,7 @@ abstract class GenericAdapter<R : ItemUiType<T>, E : ItemUiTypeList<T, R>, T : I
         return index
     }
 
-    override fun onBindViewHolder(holder: GenericViewHolder<T>, position: Int) =
+    override fun onBindViewHolder(holder: GenericViewHolder<V, T>, position: Int) =
         holder.bind(list[position])
 
     override fun getItemCount(): Int = list.size
@@ -44,36 +44,38 @@ abstract class GenericAdapter<R : ItemUiType<T>, E : ItemUiTypeList<T, R>, T : I
     /**
      * Adapter with items all not clickable
      */
-    abstract class Simple<T : ItemUi>(
-        typeList: ItemUiTypeList.Simple<T>
-    ) : GenericAdapter<ItemUiType.Base<T>, ItemUiTypeList.Simple<T>, T>(
+    abstract class Simple<V : MyView, T : ItemUi<V>>(
+        typeList: ItemUiTypeList.Simple<V, T>
+    ) : GenericAdapter<ItemUiType.Base<V, T>, ItemUiTypeList.Simple<V, T>, V, T>(
         typeList
     ) {
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<T> =
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<V, T> =
             typeList.viewHolder(viewType, parent)
     }
 
     /**
      * Adapter with items all clickable
      */
-    abstract class WithClicks<C : ClickListener, T : ItemUi>(
+    abstract class WithClicks<C : ClickListener, V : MyView, T : ItemUi<V>>(
         private val clickListener: C,
-        typeList: ItemUiTypeList.Clickable<C, T>
-    ) : GenericAdapter<ItemUiType.Clickable<T, C>, ItemUiTypeList.Clickable<C, T>, T>(typeList) {
+        typeList: ItemUiTypeList.Clickable<C, V, T>
+    ) : GenericAdapter<ItemUiType.Clickable<V, T, C>, ItemUiTypeList.Clickable<C, V, T>, V, T>(
+        typeList
+    ) {
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<T> =
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder<V, T> =
             typeList.viewHolder(viewType, parent, clickListener)
     }
 
     /**
      * Adapter with items both clickable and not clickable
      */
-    abstract class Combo<C : ClickListener, T : ItemUi>(
+    abstract class Combo<C : ClickListener, V : MyView, T : ItemUi<V>>(
         private val clickListener: C,
-        typeList: List<ItemUiType.Combo<T, C>>,
+        typeList: List<ItemUiType.Combo<V, T, C>>,
         private val clickableIndex: ClickableIndex = ClickableIndex.Base()
-    ) : GenericAdapter<ItemUiType.Combo<T, C>, ItemUiTypeList.Combined<C, T>, T>(
+    ) : GenericAdapter<ItemUiType.Combo<V, T, C>, ItemUiTypeList.Combined<C, V, T>, V, T>(
         ItemUiTypeList.Combo(typeList)
     ) {
 

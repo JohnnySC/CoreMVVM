@@ -2,45 +2,47 @@ package com.github.johnnysc.coremvvm.presentation.adapter
 
 import android.view.ViewGroup
 
-interface ItemUiTypeList<T : ItemUi, E : ItemUiType<T>> : List<E> {
+interface ItemUiTypeList<V : MyView, T : ItemUi<V>, E : ItemUiType<V, T>> : List<E> {
 
-    interface MakeViewHolder<T : ItemUi> {
-        fun viewHolder(index: Int, parent: ViewGroup): GenericViewHolder<T>
+    interface MakeViewHolder<V : MyView, T : ItemUi<V>> {
+        fun viewHolder(index: Int, parent: ViewGroup): GenericViewHolder<V, T>
     }
 
-    interface MakeClickableViewHolder<T : ItemUi, C : ClickListener> {
-        fun viewHolder(index: Int, parent: ViewGroup, clickListener: C): GenericViewHolder<T>
+    interface MakeClickableViewHolder<V : MyView, T : ItemUi<V>, C : ClickListener> {
+        fun viewHolder(index: Int, parent: ViewGroup, clickListener: C): GenericViewHolder<V, T>
     }
 
-    interface Simple<T : ItemUi> : ItemUiTypeList<T, ItemUiType.Base<T>>, MakeViewHolder<T>
+    interface Simple<V : MyView, T : ItemUi<V>> : ItemUiTypeList<V, T, ItemUiType.Base<V, T>>,
+        MakeViewHolder<V, T>
 
-    interface Clickable<C : ClickListener, T : ItemUi> :
-        ItemUiTypeList<T, ItemUiType.Clickable<T, C>>, MakeClickableViewHolder<T, C>
+    interface Clickable<C : ClickListener, V : MyView, T : ItemUi<V>> :
+        ItemUiTypeList<V, T, ItemUiType.Clickable<V, T, C>>, MakeClickableViewHolder<V, T, C>
 
-    interface Combined<C : ClickListener, T : ItemUi> : ItemUiTypeList<T, ItemUiType.Combo<T, C>>,
-        MakeViewHolder<T>, MakeClickableViewHolder<T, C>
+    interface Combined<C : ClickListener, V : MyView, T : ItemUi<V>> :
+        ItemUiTypeList<V, T, ItemUiType.Combo<V, T, C>>,
+        MakeViewHolder<V, T>, MakeClickableViewHolder<V, T, C>
 
-    class Base<T : ItemUi>(
-        list: List<ItemUiType.Base<T>>
-    ) : ArrayList<ItemUiType.Base<T>>(list), Simple<T> {
+    class Base<V : MyView, T : ItemUi<V>>(
+        list: List<ItemUiType.Base<V, T>>
+    ) : ArrayList<ItemUiType.Base<V, T>>(list), Simple<V, T> {
 
         override fun viewHolder(index: Int, parent: ViewGroup) = get(index).viewHolder(parent)
     }
 
-    class WithClickListener<C : ClickListener, T : ItemUi>(
-        list: List<ItemUiType.Clickable<T, C>>
-    ) : ArrayList<ItemUiType.Clickable<T, C>>(list), Clickable<C, T> {
+    class WithClickListener<C : ClickListener, V : MyView, T : ItemUi<V>>(
+        list: List<ItemUiType.Clickable<V, T, C>>
+    ) : ArrayList<ItemUiType.Clickable<V, T, C>>(list), Clickable<C, V, T> {
 
         override fun viewHolder(
             index: Int,
             parent: ViewGroup,
             clickListener: C
-        ): GenericViewHolder<T> = get(index).viewHolder(parent, clickListener)
+        ): GenericViewHolder<V, T> = get(index).viewHolder(parent, clickListener)
     }
 
-    class Combo<C : ClickListener, T : ItemUi>(
-        list: List<ItemUiType.Combo<T, C>>
-    ) : ArrayList<ItemUiType.Combo<T, C>>(list), Combined<C, T> {
+    class Combo<C : ClickListener, V : MyView, T : ItemUi<V>>(
+        list: List<ItemUiType.Combo<V, T, C>>
+    ) : ArrayList<ItemUiType.Combo<V, T, C>>(list), Combined<C, V, T> {
 
         override fun viewHolder(index: Int, parent: ViewGroup, clickListener: C) =
             get(index).viewHolder(parent, clickListener)

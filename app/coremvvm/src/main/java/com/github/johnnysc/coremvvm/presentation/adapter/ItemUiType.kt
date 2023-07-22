@@ -2,38 +2,39 @@ package com.github.johnnysc.coremvvm.presentation.adapter
 
 import android.view.ViewGroup
 
-interface ItemUiType<T : ItemUi> {
+interface ItemUiType<V : MyView, T : ItemUi<V>> {
 
     fun clickable(): Boolean
 
-    interface MakeViewHolder<T : ItemUi> {
+    interface MakeViewHolder<V : MyView, T : ItemUi<V>> {
 
-        fun viewHolder(parent: ViewGroup): GenericViewHolder<T>
+        fun viewHolder(parent: ViewGroup): GenericViewHolder<V, T>
     }
 
-    interface MakeViewHolderClickable<T : ItemUi, C : ClickListener> {
+    interface MakeViewHolderClickable<V : MyView, T : ItemUi<V>, C : ClickListener> {
 
-        fun viewHolder(parent: ViewGroup, clickListener: C): GenericViewHolder<T>
+        fun viewHolder(parent: ViewGroup, clickListener: C): GenericViewHolder<V, T>
     }
 
-    interface Base<T : ItemUi> : ItemUiType<T>, MakeViewHolder<T> {
+    interface Base<V : MyView, T : ItemUi<V>> : ItemUiType<V, T>, MakeViewHolder<V, T> {
 
         override fun clickable() = false
     }
 
-    interface Clickable<T : ItemUi, C : ClickListener> : ItemUiType<T>,
-        MakeViewHolderClickable<T, C> {
+    interface Clickable<V : MyView, T : ItemUi<V>, C : ClickListener> : ItemUiType<V, T>,
+        MakeViewHolderClickable<V, T, C> {
 
         override fun clickable() = true
     }
 
-    interface Combo<T : ItemUi, C : ClickListener> : ItemUiType<T>, MakeViewHolder<T>,
-        MakeViewHolderClickable<T, C> {
+    interface Combo<V : MyView, T : ItemUi<V>, C : ClickListener> : ItemUiType<V, T>,
+        MakeViewHolder<V, T>,
+        MakeViewHolderClickable<V, T, C> {
 
-        override fun viewHolder(parent: ViewGroup): GenericViewHolder<T> =
+        override fun viewHolder(parent: ViewGroup): GenericViewHolder<V, T> =
             throw IllegalStateException("override to use if not clickable")
 
-        override fun viewHolder(parent: ViewGroup, clickListener: C): GenericViewHolder<T> =
+        override fun viewHolder(parent: ViewGroup, clickListener: C): GenericViewHolder<V, T> =
             throw IllegalStateException("override to use if clickable")
     }
 }
